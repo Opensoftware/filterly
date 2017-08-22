@@ -24,8 +24,22 @@ RSpec.describe Filterly::Node do
     it 'checks whether node has incorrect attribute name' do
       expect(subject.attr_name_equal?(:semester)).to be_falsy
     end
+  end
 
-    it 'returns false for no attr_name left leave' do
+  describe '#node_with_attr_name?' do
+    let(:params) do
+      [
+        :op_equal,
+        described_class.new(:attr_name, [:annual_id, nil, nil]),
+        nil
+      ]
+    end
+
+    it 'returns true for attr_name left leaf type' do
+      expect(subject.node_with_attr_name?).to be_truthy
+    end
+
+    it 'returns false for no attr_name left leaf' do
       subject = described_class.new(
         :smth,
         [
@@ -34,13 +48,13 @@ RSpec.describe Filterly::Node do
         ]
       )
 
-      expect(subject.attr_name_equal?(:asdas)).to be_falsy
+      expect(subject.node_with_attr_name?).to be_falsy
     end
 
     it 'returns false for empty node' do
       subject = described_class.new(:root, [])
 
-      expect(subject.attr_name_equal?(:any)).to be_falsy
+      expect(subject.node_with_attr_name?).to be_falsy
     end
   end
 end

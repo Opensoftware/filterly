@@ -12,3 +12,9 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+class Examples
+  def self.root
+    File.join (File.dirname __dir__), 'examples'
+  end
+end

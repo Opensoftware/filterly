@@ -16,8 +16,12 @@ module Filterly
     end
 
     def attr_name_equal?(node_attr_name)
+      node_with_attr_name? && left.children.first == node_attr_name
+    end
+
+    def node_with_attr_name?
       return false if leaf?
-      left.type == :attr_name && left.children.first == node_attr_name
+      left.type == :attr_name
     end
 
     def leaf?
