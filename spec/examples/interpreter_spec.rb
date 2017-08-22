@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'filterly/interpreter'
-require 'ast'
+require 'filterly/node'
+require File.join Examples.root, 'interpreter'
 
-RSpec.describe Filterly::Interpreter do
+RSpec.describe Interpreter do
   subject do
     described_class.new(ast: ast)
   end
@@ -69,7 +69,7 @@ RSpec.describe Filterly::Interpreter do
                   :expression,
                   [
                     :op_in,
-                    Filterly::Node.new(:attr_name, [:cate_id, nil, nil]),
+                    Filterly::Node.new(:attr_name, [:category_ids, nil, nil]),
                     Filterly::Node.new(
                       :attr_array,
                       [
@@ -114,7 +114,7 @@ RSpec.describe Filterly::Interpreter do
             annual: '2017-2018'
           },
           {
-            cate_id: [67, 32, 34]
+            category_ids: [67, 32, 34]
           }
         ]
       )
@@ -123,9 +123,15 @@ RSpec.describe Filterly::Interpreter do
 
   describe '#to_sql' do
     it 'returns sql query' do
-      expect(subject.to_sql).to eql(
-        "(course_id='23' OR (course_id='7' OR course_id='56'))"\
-        " AND annual='2017-2018' AND cate_id IN('67','32','34')"
+      expect(subject.to_sql.split.join(' ')).to eql(
+        <<~SQL.split.join(' ')
+          (course_id='23' OR (course_id='7' OR course_id='56')) AND annual='2017-2018'
+          AND EXISTS(
+            SELECT TRUE FROM category_courses
+            WHERE category_courses.category_id IN('67','32','34'))
+            AND courses.id = category_courses.course_id
+          )
+        SQL
       )
     end
   end
