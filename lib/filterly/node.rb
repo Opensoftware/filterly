@@ -16,7 +16,7 @@ module Filterly
     end
 
     def attr_name_equal?(node_attr_name)
-      node_with_attr_name? && left.children.first == node_attr_name
+      node_with_attr_name? && left.value == node_attr_name
     end
 
     def node_with_attr_name?

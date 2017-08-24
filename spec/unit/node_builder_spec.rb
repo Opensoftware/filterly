@@ -39,6 +39,54 @@ RSpec.describe Filterly::NodeBuilder do
     end
   end
 
+  describe '#self.build_not_equality_node' do
+    it 'returns requested ast node' do
+      result = subject.build_not_equality_node(attr_name: 'course_id', attr_value: 12)
+
+      expect(result.to_a).to match_array(
+        [
+          :expression,
+          [
+            :op_not_equal,
+            [
+              :attr_name,
+              [
+                'course_id',
+                [],
+                []
+              ]
+            ],
+            [
+              :attr_value,
+              [
+                12,
+                [],
+                []
+              ]
+            ]
+          ]
+        ]
+      )
+    end
+  end
+
+  describe '#self.build_exists_node' do
+    it 'returns requested ast node' do
+      result = subject.build_exists_node(attr_name: 'course_id', attr_value: 12)
+
+      expect(result.to_a).to match_array(
+        [
+          :expression,
+          [
+            :op_exists,
+            [:attr_name, ['course_id', [], []]],
+            [:attr_value, [12, [], []]]
+          ]
+        ]
+      )
+    end
+  end
+
   describe '#self.build_array_values_node' do
     it 'returns requested ast node' do
       result = subject.build_array_values_node(
