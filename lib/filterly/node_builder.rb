@@ -15,6 +15,28 @@ module Filterly
       )
     end
 
+    def self.build_not_equality_node(attr_name:, attr_value:)
+      Filterly::Node.new(
+        :expression,
+        [
+          :op_not_equal,
+          Filterly::Node.new(:attr_name, [attr_name, nil, nil]),
+          Filterly::Node.new(:attr_value, [attr_value, nil, nil])
+        ]
+      )
+    end
+
+    def self.build_exists_node(attr_name:, attr_value:)
+      Filterly::Node.new(
+        :expression,
+        [
+          :op_exists,
+          Filterly::Node.new(:attr_name, [attr_name, nil, nil]),
+          Filterly::Node.new(:attr_value, [attr_value, nil, nil])
+        ]
+      )
+    end
+
     def self.build_array_values_node(attr_name:, array_of_values:)
       Filterly::Node.new(
         :expression,
