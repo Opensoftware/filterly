@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'filterly/node'
-require File.join Examples.root, 'interpreter/to_sql/expression_factory'
+require 'examples/interpreter/to_sql/expression_factory'
 
 RSpec.describe Interpreter::ToSql::ExpressionFactory do
   subject do

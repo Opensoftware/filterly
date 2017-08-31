@@ -102,21 +102,22 @@ RSpec.describe Filterly::NodeBuilder do
             [:attr_name, ['course_id', [], []]],
             [
               :attr_array, [
-                nil,
+                12,
                 [
-                  :attr_value, [
-                    12,
-                    [:attr_value, [1, [], []]],
-                    [
-                      :attr_value, [
-                        3,
-                        [:attr_value, [4, [], []]],
-                        []
-                      ]
-                    ]
+                  :attr_array, [
+                    1,
+                    [],
+                    []
                   ]
                 ],
-                []
+                [
+                  :attr_array,
+                  [
+                    3,
+                    [:attr_array, [4, [], []]],
+                    []
+                  ]
+                ]
               ]
             ]
           ]
