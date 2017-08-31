@@ -32,7 +32,7 @@ class Interpreter
         <<~SQL
           EXISTS(
             SELECT TRUE FROM category_courses
-            WHERE category_courses.category_id #{determine_values(value, right)})
+            WHERE category_courses.category_id #{determine_values(value, right)}
             AND courses.id = category_courses.course_id
           )
         SQL
