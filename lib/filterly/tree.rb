@@ -4,11 +4,10 @@ require 'ast/sexp'
 
 module Filterly
   class Tree
-    attr_reader :root_node, :tree_traverser
+    attr_reader :root_node
 
     def initialize(root_node)
       @root_node = root_node
-      @tree_traverser = TreeTraverser.new(root_node)
     end
 
     def self.new(root_node)
@@ -18,12 +17,23 @@ module Filterly
       super(root_node)
     end
 
+    def self.initialize_with_filters
+      new(
+        Filterly::NodeBuilder.build_custom_node(
+          type: :root,
+          args: [:filters, nil, nil]
+        )
+      )
+    end
+
     def extend_ast(node_attr_name, new_node, stmt_type)
-      @root_node = tree_traverser.extend_ast(node_attr_name, new_node, stmt_type)
+      @root_node = TreeTraverser
+        .new(@root_node)
+        .extend_ast(node_attr_name, new_node, stmt_type)
     end
 
     def prepend_ast(new_node, stmt_type)
-      @root_node = tree_traverser.prepend_ast(new_node, stmt_type)
+      @root_node = TreeTraverser.new(@root_node).prepend_ast(new_node, stmt_type)
     end
 
     def to_ast
@@ -73,13 +83,13 @@ module Filterly
           [
             ast_node.value,
             self
-              .class
-              .new(ast_node.left)
-              .extend_ast(node_attr_name, new_node, stmt_type),
+            .class
+            .new(ast_node.left)
+            .extend_ast(node_attr_name, new_node, stmt_type),
             self
-              .class
-              .new(ast_node.right)
-              .extend_ast(node_attr_name, new_node, stmt_type)
+            .class
+            .new(ast_node.right)
+            .extend_ast(node_attr_name, new_node, stmt_type)
           ]
         )
       end

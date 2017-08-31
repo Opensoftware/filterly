@@ -29,6 +29,7 @@ class Interpreter
 
     # @api private
     def visit_statement(value, left, right)
+      return visit(left) if right.nil?
       case value
       when :and
         "#{visit(left)} AND #{visit(right)}"

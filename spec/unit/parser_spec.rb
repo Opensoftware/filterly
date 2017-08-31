@@ -37,16 +37,16 @@ RSpec.describe Filterly::Parser do
                     [
                       :attr_array,
                       [
-                        nil,
+                        12,
                         [
-                          :attr_value,
+                          :attr_array,
                           [
-                            12,
-                            [:attr_value, [34, [], []]],
-                            [:attr_value, [54, [], []]]
+                            34,
+                            [],
+                            []
                           ]
                         ],
-                        []
+                        [:attr_array, [54, [], []]]
                       ]
                     ]
                   ]

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'filterly/node'
-require File.join Examples.root, 'interpreter'
+require 'examples/interpreter'
 
 RSpec.describe Interpreter do
   subject do
