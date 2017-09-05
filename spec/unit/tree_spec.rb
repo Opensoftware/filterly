@@ -84,6 +84,14 @@ RSpec.describe Filterly::Tree do
   end
 
   describe '#extend_ast' do
+    it 'tries to extend with nil node and fails' do
+      tree = described_class.initialize_with_filters
+
+      expect { tree.extend_ast('name', nil, :or) }.to raise_error(
+        'Tried to append nil node which is forbidden!'
+      )
+    end
+
     it 'adds a new node to specific node and returns root' do
       subject.extend_ast(node_attr_name, new_node, :or)
 
@@ -209,6 +217,37 @@ RSpec.describe Filterly::Tree do
             []
           ]
         ]
+      )
+    end
+
+    it 'adds a new node without statement for empty tree' do
+      tree = described_class.initialize_with_filters
+      tree.prepend_ast(new_node, :or)
+
+      expect(tree.to_ast.to_a).to match_array(
+        [
+          :root,
+          [
+            :filters,
+            [
+              :expression,
+              [
+                :op_equal,
+                [:attr_name, [:whatever_id, [], []]],
+                [:attr_value, [13, [], []]]
+              ]
+            ],
+            []
+          ]
+        ]
+      )
+    end
+
+    it 'tries to add nil node and fails' do
+      tree = described_class.initialize_with_filters
+
+      expect { tree.prepend_ast(nil, :or) }.to raise_error(
+        'Tried to append nil node which is forbidden!'
       )
     end
   end
