@@ -64,7 +64,6 @@ UserPipeline.new(
     order: { 'courses.id': 'asc' },
     params: {
       limit: 10,
-      offset: 0,
       not_supported: 'omitted'
     }
   }

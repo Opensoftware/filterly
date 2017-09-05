@@ -73,35 +73,28 @@ RSpec.describe Filterly::Pipeline::ParamBuilder do
                   [
                     :and,
                     [
-                      :statement,
+                      :expression,
                       [
-                        :and,
+                        :op_in,
+                        [:attr_name, [:category_ids, [], []]],
                         [
-                          :expression,
+                          :attr_array,
                           [
-                            :op_in,
-                            [:attr_name, [:category_ids, [], []]],
-                            [
-                              :attr_array,
-                              [
-                                12,
-                                [:attr_array, [34, [], []]],
-                                [:attr_array, [54, [], []]]
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          :expression,
-                          [
-                            :op_equal,
-                            [:attr_name, [:course_semester_id, [], []]],
-                            [:attr_value, [123, [], []]]
+                            12,
+                            [:attr_array, [34, [], []]],
+                            [:attr_array, [54, [], []]]
                           ]
                         ]
                       ]
                     ],
-                    []
+                    [
+                      :expression,
+                      [
+                        :op_equal,
+                        [:attr_name, [:course_semester_id, [], []]],
+                        [:attr_value, [123, [], []]]
+                      ]
+                    ]
                   ]
                 ]
               ]
