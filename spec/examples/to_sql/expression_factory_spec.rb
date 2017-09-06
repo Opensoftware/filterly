@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'filterly/node'
-require File.join Examples.root, 'interpreter/to_sql/expression_factory'
+require 'examples/interpreter/to_sql/expression_factory'
 
 RSpec.describe Interpreter::ToSql::ExpressionFactory do
   subject do
@@ -44,7 +44,7 @@ RSpec.describe Interpreter::ToSql::ExpressionFactory do
         <<~SQL.split.join(' ')
           EXISTS(
             SELECT TRUE FROM category_courses
-            WHERE category_courses.category_id IN('67','32','34'))
+            WHERE category_courses.category_id IN('67','32','34')
             AND courses.id = category_courses.course_id
           )
         SQL

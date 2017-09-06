@@ -79,18 +79,21 @@ module Filterly
 
     # @api private
     def self.attr_array(array_of_values)
-      Filterly::Node.new(:attr_array, [nil, ast_array(array_of_values), nil])
+      Filterly::Node.new(
+        :attr_array,
+        attr_array_params(array_of_values)
+      )
     end
 
     # @api private
     def self.ast_array(params)
       return if params.nil?
-      return Filterly::Node.new(:attr_value, [params, nil, nil]) unless
+      return Filterly::Node.new(:attr_array, [params, nil, nil]) unless
         params.is_a?(Array)
 
       return if params.empty?
 
-      Filterly::Node.new(:attr_value, attr_array_params(params))
+      Filterly::Node.new(:attr_array, attr_array_params(params))
     end
 
     # @api private
