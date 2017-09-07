@@ -92,13 +92,13 @@ module Filterly
           [
             ast_node.value,
             self
-              .class
-              .new(ast_node.left)
-              .extend_ast(node_attr_name, new_node, stmt_type),
+            .class
+            .new(ast_node.left)
+            .extend_ast(node_attr_name, new_node, stmt_type),
             self
-              .class
-              .new(ast_node.right)
-              .extend_ast(node_attr_name, new_node, stmt_type)
+            .class
+            .new(ast_node.right)
+            .extend_ast(node_attr_name, new_node, stmt_type)
           ]
         )
       end

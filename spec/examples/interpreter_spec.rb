@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'filterly/node'
-require File.join Examples.root, 'interpreter'
+require 'examples/interpreter'
 
 RSpec.describe Interpreter do
   subject do
@@ -128,7 +128,7 @@ RSpec.describe Interpreter do
           (course_id='23' OR (course_id='7' OR course_id='56')) AND annual='2017-2018'
           AND EXISTS(
             SELECT TRUE FROM category_courses
-            WHERE category_courses.category_id IN('67','32','34'))
+            WHERE category_courses.category_id IN('67','32','34')
             AND courses.id = category_courses.course_id
           )
         SQL

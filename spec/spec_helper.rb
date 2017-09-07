@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift('.')
+
 require "bundler/setup"
 require "filterly"
 
@@ -10,11 +14,5 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
-  end
-end
-
-class Examples
-  def self.root
-    File.join (File.dirname __dir__), 'examples'
   end
 end

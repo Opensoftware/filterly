@@ -83,6 +83,21 @@ RSpec.describe Filterly::Tree do
     end
   end
 
+  describe '#initialize_with_filters' do
+    it 'initializes Tree with filters root' do
+      expect(described_class.initialize_with_filters.root_node.to_a).to match_array(
+        [
+          :root,
+          [
+            :filters,
+            [],
+            []
+          ]
+        ]
+      )
+    end
+  end
+
   describe '#extend_ast' do
     it 'tries to extend with nil node and fails' do
       tree = described_class.initialize_with_filters
