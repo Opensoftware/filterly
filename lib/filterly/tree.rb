@@ -27,12 +27,16 @@ module Filterly
     end
 
     def extend_ast(node_attr_name, new_node, stmt_type)
+      self.class.ensure_not_nil_node!(new_node)
+
       @root_node = TreeTraverser
         .new(@root_node)
         .extend_ast(node_attr_name, new_node, stmt_type)
     end
 
     def prepend_ast(new_node, stmt_type)
+      self.class.ensure_not_nil_node!(new_node)
+
       @root_node = TreeTraverser.new(@root_node).prepend_ast(new_node, stmt_type)
     end
 
@@ -44,7 +48,12 @@ module Filterly
       root_node.to_s
     end
 
-    # @apir private
+    # @api private
+    def self.ensure_not_nil_node!(ast_node)
+      raise 'Tried to append nil node which is forbidden!' if ast_node.nil?
+    end
+
+    # @api private
     def self.ensure_ast_root!(root_node)
       raise 'Not a tree root!' if root_node.type != :root
     end
@@ -95,6 +104,8 @@ module Filterly
       end
 
       def prepend_ast(new_node, stmt_type)
+        return prepend_ast_without_statement(new_node) if ast_node.leaf?
+
         create_node(
           ast_node.type,
           [
@@ -103,6 +114,18 @@ module Filterly
               :statement,
               [stmt_type, new_node, ast_node.left]
             ),
+            nil
+          ]
+        )
+      end
+
+      # @api private
+      def prepend_ast_without_statement(new_node)
+        create_node(
+          ast_node.type,
+          [
+            ast_node.value,
+            new_node,
             nil
           ]
         )
